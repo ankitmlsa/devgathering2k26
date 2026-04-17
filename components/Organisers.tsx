@@ -34,7 +34,7 @@ const ORG_ROW1: Person[] = [
   { name: "Ankit",     role: "Tech Head",     linkedin: "https://www.linkedin.com/in/i-ankit01/", image: "/team/ankit.PNG" },
   { name: "Aayushi",   role: "Tech Head",     linkedin: "https://www.linkedin.com/in/aayushi-nagar-688642279/", image: "/team/aayushi.PNG" },
   { name: "Geetanshi", role: "Content Head",  linkedin: "https://www.linkedin.com/in/geetanshi-goel-49ba5832b/", image: "/team/geetanshi2.PNG" },
-  { name: "Bhavya",    role: "Graphics Head", linkedin: "https://www.linkedin.com/in/anmolkumar01/", image: "/team/bhavya.PNG" },
+  { name: "Bhavya",    role: "Graphics Head", linkedin: "https://www.linkedin.com/in/bhavya-gupta-832366257/", image: "/team/bhavya.PNG" },
   { name: "Prafullit", role: "Outreach Head", linkedin: "https://www.linkedin.com/in/prafullit-bhattacharya-9443b4306/", image: "/team/prafullit.PNG" },
 ];
 
