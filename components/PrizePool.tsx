@@ -12,15 +12,10 @@ const PINK   = "#FFD6E8";
 
 /* ══════════════════════════════════════════════════════
    LOTTIE CONFETTI OVERLAY
-   Plays once fullscreen on reveal, then disappears.
-   Uses @lottiefiles/lottie-player web component loaded
-   from CDN so no extra npm install is needed.
-   Falls back gracefully if the script hasn't loaded yet.
 ══════════════════════════════════════════════════════ */
 function LottieConfettiOverlay({ active, onDone }: { active: boolean; onDone: () => void }) {
   const playerRef = useRef<HTMLElement & { play: () => void }>(null);
 
-  /* Inject the lottie-player script once */
   useEffect(() => {
     if (document.querySelector('script[data-lottie-cdn]')) return;
     const s = document.createElement("script");
@@ -29,35 +24,25 @@ function LottieConfettiOverlay({ active, onDone }: { active: boolean; onDone: ()
     document.head.appendChild(s);
   }, []);
 
-  /* When active becomes true, fire play and schedule cleanup */
   useEffect(() => {
     if (!active) return;
-    const timer = setTimeout(onDone, 4200); // match lottie duration
+    const timer = setTimeout(onDone, 4200);
     return () => clearTimeout(timer);
   }, [active, onDone]);
 
   if (!active) return null;
 
   return (
-    <div
-      className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ overflow: "hidden" }}
-    >
-      {/* @ts-ignore — lottie-player is a custom element */}
+    <div className="fixed inset-0 pointer-events-none z-[9999]" style={{ overflow: "hidden" }}>
+      {/* @ts-ignore */}
       <lottie-player
         ref={playerRef}
         src="/celebrate2.json"
         background="transparent"
         speed="1"
         autoplay
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-        }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
       />
-      {/* Golden flash burst on reveal */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
         initial={{ opacity: 0 }}
@@ -65,9 +50,7 @@ function LottieConfettiOverlay({ active, onDone }: { active: boolean; onDone: ()
         transition={{ duration: 0.6, delay: 0.05 }}
       >
         <div style={{
-          width: 700,
-          height: 700,
-          borderRadius: "50%",
+          width: 700, height: 700, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(251,191,36,0.5) 0%, transparent 68%)",
         }} />
       </motion.div>
@@ -91,7 +74,6 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
     if (!ctx) return;
     const W = canvas.width, H = canvas.height;
 
-    /* ── Base layer: rich dark silver-charcoal scratch surface ── */
     const base = ctx.createLinearGradient(0, 0, W, H);
     base.addColorStop(0,    "#2a2e35");
     base.addColorStop(0.45, "#3a3f4a");
@@ -99,7 +81,6 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
     ctx.fillStyle = base;
     ctx.fillRect(0, 0, W, H);
 
-    /* Subtle noise texture */
     for (let i = 0; i < 3200; i++) {
       const tx = Math.random() * W;
       const ty = Math.random() * H;
@@ -108,7 +89,6 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
       ctx.fillRect(tx, ty, 1.2, 1.2);
     }
 
-    /* Diagonal shimmer band */
     const shine = ctx.createLinearGradient(W * 0.1, 0, W * 0.9, 0);
     shine.addColorStop(0,    "transparent");
     shine.addColorStop(0.42, "rgba(255,255,255,0.07)");
@@ -118,7 +98,6 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
     ctx.fillStyle = shine;
     ctx.fillRect(0, 0, W, H);
 
-    /* Ghost watermark text — using Syne-like weight/spacing */
     ctx.save();
     ctx.font = "900 64px 'Syne', 'Arial Black', sans-serif";
     ctx.fillStyle = "rgba(255,255,255,0.04)";
@@ -129,19 +108,16 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
     ctx.fillText("PRIZE POOL", 0, 0);
     ctx.restore();
 
-    /* ── Main CTA line — bright white, Syne-style ── */
     ctx.font = "800 18px 'Syne', 'Arial Black', sans-serif";
     ctx.fillStyle = "rgba(255,255,255,0.96)";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("✦  Scratch to Reveal  ✦", W / 2, H / 2 - 2);
 
-    /* ── Sub-hint line — soft warm-white, DM Sans ── */
     ctx.font = "500 12px 'DM Sans', 'Helvetica Neue', sans-serif";
     ctx.fillStyle = "rgba(220,230,245,0.68)";
     ctx.fillText("drag your finger or mouse anywhere", W / 2, H / 2 + 26);
 
-    /* Dot grid overlay */
     for (let r = 0; r < H; r += 14) {
       for (let c = 0; c < W; c += 14) {
         ctx.beginPath();
@@ -151,7 +127,6 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
       }
     }
 
-    /* Top edge highlight */
     const topHighlight = ctx.createLinearGradient(0, 0, W, 0);
     topHighlight.addColorStop(0, "transparent");
     topHighlight.addColorStop(0.3, "rgba(255,255,255,0.12)");
@@ -286,15 +261,15 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
    PRIZE CARDS
 ══════════════════════════════════════════════════════ */
 const PRIZES = [
-  { rank: "1st", label: "First Place",  LucideIcon: Trophy, accent: "#5BA4E6", bg: BLUE,   iconColor: "#5BA4E6" },
-  { rank: "2nd", label: "Second Place", LucideIcon: Medal,  accent: "#4CAF50", bg: GREEN,  iconColor: "#4CAF50" },
-  { rank: "3rd", label: "Third Place",  LucideIcon: Award,  accent: "#D85C8A", bg: PINK,   iconColor: "#D85C8A" },
+  { rank: "1st", label: "First Place",  amount: "₹12,000", LucideIcon: Trophy, accent: "#5BA4E6", bg: BLUE,   iconColor: "#5BA4E6" },
+  { rank: "2nd", label: "Second Place", amount: "₹8,000",  LucideIcon: Medal,  accent: "#4CAF50", bg: GREEN,  iconColor: "#4CAF50" },
+  { rank: "3rd", label: "Third Place",  amount: "₹5,000",  LucideIcon: Award,  accent: "#D85C8A", bg: PINK,   iconColor: "#D85C8A" },
 ];
 
 const CARD_SIZES = [
-  { padding: "32px 20px 28px", iconBox: 72, iconSize: 34, nameSize: 20, rankFontSize: 96 },
-  { padding: "24px 18px 22px", iconBox: 60, iconSize: 28, nameSize: 17, rankFontSize: 80 },
-  { padding: "20px 16px 18px", iconBox: 54, iconSize: 24, nameSize: 15, rankFontSize: 72 },
+  { padding: "32px 20px 28px", iconBox: 72, iconSize: 34, nameSize: 20, rankFontSize: 96, amountSize: 32 },
+  { padding: "24px 18px 22px", iconBox: 60, iconSize: 28, nameSize: 17, rankFontSize: 80, amountSize: 26 },
+  { padding: "20px 16px 18px", iconBox: 54, iconSize: 24, nameSize: 15, rankFontSize: 72, amountSize: 22 },
 ];
 
 function Separator({ label }: { label: string }) {
@@ -321,7 +296,6 @@ function Separator({ label }: { label: string }) {
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* 4-dot icon */}
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <circle cx="4"  cy="4"  r="3" fill="#CFE8FF" stroke="#5BA4E6" strokeWidth="1"/>
           <circle cx="12" cy="4"  r="3" fill="#FFE9A8" stroke="#C89A2A" strokeWidth="1"/>
@@ -430,29 +404,38 @@ function PrizeCard({ prize, sizeIndex, animIndex }: {
       >
         <LucideIcon size={sz.iconSize} color={prize.iconColor} strokeWidth={1.7} />
       </motion.div>
+
       <p className="relative z-10 font-black mt-3 tracking-tight"
         style={{ fontFamily: "'Syne', sans-serif", fontSize: sz.nameSize, color: "#1a1a1a" }}>
         {prize.label}
       </p>
+
       <div className="w-3/4 my-2.5 h-px rounded-full"
         style={{ background: `linear-gradient(90deg, transparent, ${prize.accent}55, transparent)` }} />
-      <div className="relative z-10 flex flex-col items-center gap-1.5">
-        <motion.div
-          className="flex items-center justify-center rounded-full"
-          style={{ width: 32, height: 32, background: `${prize.accent}18`, border: `1.5px solid ${prize.accent}45` }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+
+      {/* ── Prize amount — replaces "To be revealed" ── */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center gap-0.5"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.5, delay: animIndex * 0.12 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <p
+          className="font-black leading-none tracking-tight"
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            fontSize: sz.amountSize,
+            color: prize.accent,
+            textShadow: `0 2px 8px ${prize.accent}44`,
+          }}
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={prize.accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-        </motion.div>
-        <p className="text-[9px] uppercase tracking-[0.38em] font-semibold text-center"
-          style={{ fontFamily: "'DM Sans', sans-serif", color: prize.accent, opacity: 0.75 }}>
-          To be revealed
+          {prize.amount}
         </p>
-      </div>
+        <p className="text-[9px] uppercase tracking-[0.38em] font-semibold"
+          style={{ fontFamily: "'DM Sans', sans-serif", color: prize.accent, opacity: 0.65 }}>
+          Cash Prize
+        </p>
+      </motion.div>
     </motion.div>
   );
 }
@@ -474,7 +457,7 @@ export default function PrizePoolSection() {
 
   const handleRevealed = useCallback(() => {
     setRevealed(true);
-    setLottieOn(true);                 // trigger Lottie overlay
+    setLottieOn(true);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {});
@@ -487,18 +470,15 @@ export default function PrizePoolSection() {
 
   return (
     <>
-      {/* Lottie celebrate overlay — plays once, fullscreen */}
       <LottieConfettiOverlay active={lottieOn} onDone={handleLottieDone} />
 
       <section id="prizes" className="relative w-full py-24 px-4 overflow-hidden">
-        {/* 4-band pastel wash */}
         <div className="absolute inset-0 flex pointer-events-none">
           {[BLUE, YELLOW, GREEN, PINK].map((c, i) => (
             <div key={i} className="flex-1 opacity-[0.08]" style={{ background: c }} />
           ))}
         </div>
 
-        {/* Ghost watermark */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none overflow-hidden" style={{ opacity: 0.017 }}>
           <span style={{
             fontFamily: "'Syne', sans-serif", fontWeight: 900,
@@ -612,7 +592,7 @@ export default function PrizePoolSection() {
             animate={titleInView ? { opacity: 1 } : {}}
             transition={{ delay: 1 }}
           >
-            Individual prize amounts revealed on event day
+            Winners announced on event day
           </motion.p>
         </div>
 
