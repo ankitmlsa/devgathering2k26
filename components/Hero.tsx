@@ -11,7 +11,7 @@ const GREEN = "#D7F5D0";
 const PINK = "#FFD6E8";
 
 /* ── Countdown target: 10 April 2026 09:00 IST ── */
-const TARGET = new Date("2026-04-10T09:00:00+05:30");
+const TARGET = new Date("2026-06-20T09:00:00+05:30");
 
 function getTimeLeft() {
   const diff = Math.max(0, TARGET.getTime() - Date.now());
@@ -117,6 +117,24 @@ function TickerDigit({
   );
 }
 
+function Colon() {
+  return (
+    <motion.div
+      className="flex flex-col gap-1.5 mb-6"
+      animate={{ opacity: [1, 0.15, 1] }}
+      transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <div
+        className="w-1.5 h-1.5 rounded-full"
+        style={{ background: "#ccc" }}
+      />
+      <div
+        className="w-1.5 h-1.5 rounded-full"
+        style={{ background: "#ccc" }}
+      />
+    </motion.div>
+  );
+}
 
 function Pill({
   icon,
@@ -220,133 +238,6 @@ const UsrIcon = () => (
   </svg>
 );
 
-function LockedDaysCard({
-  value,
-  label,
-  accent,
-  bg,
-}: {
-  value: number;
-  label: string;
-  accent: string;
-  bg: string;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-2">
-      {/* Card wrapper — relative so overlay can be absolute */}
-      <div
-        className="relative flex items-center justify-center overflow-hidden"
-        style={{
-          width: "clamp(58px, 11vw, 96px)",
-          height: "clamp(62px, 12vw, 102px)",
-          borderRadius: 16,
-          background: bg,
-          outline: `2px solid ${accent}42`,
-          outlineOffset: 0,
-          boxShadow: `0 0 0 4px ${accent}10, 0 8px 24px ${accent}24, inset 0 1px 0 rgba(255,255,255,0.85)`,
-        }}
-      >
-        {/* Same decorative layers as regular card */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(140deg, rgba(255,255,255,0.65) 0%, transparent 52%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(${accent}28 1px, transparent 1px)`,
-            backgroundSize: "12px 12px",
-            opacity: 0.5,
-          }}
-        />
-        {/* <div
-          className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${accent}bb 40%, ${accent} 50%, ${accent}bb 60%, transparent)`,
-          }}
-        /> */}
-
-        {/* Blurred number underneath */}
-        <span
-          className="relative z-10 font-black tabular-nums select-none"
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: "clamp(20px, 4.5vw, 38px)",
-            color: "#1a1a1a",
-            letterSpacing: "-0.03em",
-            filter: "blur(6px)",
-            opacity: 0.35,
-          }}
-        >
-          {String(value).padStart(2, "0")}
-        </span>
-
-        {/* Frosted glass overlay */}
-        <div
-          className="absolute inset-0 flex flex-col items-center justify-center z-20"
-          style={{
-            backdropFilter: "blur(3px)",
-            WebkitBackdropFilter: "blur(3px)",
-            background: `linear-gradient(135deg, ${bg}cc 0%, ${bg}99 100%)`,
-            borderRadius: 14,
-          }}
-        >
-          {/* Lock icon */}
-          <motion.div
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            style={{ color: accent, marginBottom: 2 }}
-          >
-            <svg
-              width="clamp(10px, 2vw, 16px)"
-              height="clamp(10px, 2vw, 16px)"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
-          </motion.div>
-
-          {/* "Coming Soon" text — animated shimmer */}
-          <motion.span
-            className="font-black uppercase text-center leading-none"
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: "clamp(5.5px, 1.1vw, 9px)",
-              letterSpacing: "0.12em",
-              background: `linear-gradient(90deg, ${accent}99, ${accent}, ${accent}cc, ${accent})`,
-              backgroundSize: "200% 100%",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
-          >
-            <br />
-            Soon
-          </motion.span>
-        </div>
-      </div>
-
-      <span
-        className="text-[8px] uppercase tracking-[0.42em] font-semibold"
-        style={{ fontFamily: "'DM Sans', sans-serif", color: "#aaa" }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
-
 /* ════════════════════════════════════════════════════
    HERO SECTION
 ════════════════════════════════════════════════════ */
@@ -387,7 +278,16 @@ export default function HeroSection() {
         ))}
       </motion.div>
 
-     
+      {/* ── Floating blobs ── */}
+      {/* {SHAPES.map((s, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full pointer-events-none"
+          style={{ left: s.x, top: s.y, width: s.size, height: s.size, background: s.color, filter: "blur(1.5px)" }}
+          animate={{ y: [0, -14, 0, 8, 0], x: [0, 6, 0, -4, 0], opacity: [0.45, 0.65, 0.7, 0.6, 0.45], scale: [0.94, 1.05, 1.02, 1.05, 0.94] }}
+          transition={{ duration: s.dur, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))} */}
 
       {/* ── Ghost watermark ── */}
       <div
@@ -566,7 +466,7 @@ export default function HeroSection() {
         <div className="flex flex-wrap justify-center gap-2">
           <Pill
             icon={<CalIcon />}
-            text="Dates To Be Announced Soon"
+            text="27-28 June 2026"
             accent="#5BA4E6"
             bg={BLUE}
             delay={0.8}
@@ -603,43 +503,17 @@ export default function HeroSection() {
         >
           <p
             className="text-[9px] uppercase tracking-[0.55em]"
-            style={{ fontFamily: "'DM Sans', sans-serif", color: "#c0c0c0" }}
+            style={{ fontFamily: "'DM Sans', sans-serif", color: "#3f3636" }}
           >
-            Hackathon Starts In
+            Time Remaining to Register
           </p>
           <div className="flex items-end justify-center gap-2 sm:gap-3">
-            {/* {tickers.map((t, i) => (
+            {tickers.map((t, i) => (
               <div key={t.label} className="flex items-end gap-2 sm:gap-3">
                 <TickerDigit {...t} />
                 {i < tickers.length - 1 && <Colon />}
               </div>
-            ))} */}
-            <div className="flex md:gap-7 gap-4">
-            <LockedDaysCard
-              value={0}
-              label="Days"
-              accent="#5BA4E6"
-              bg={BLUE}
-            />
-            <LockedDaysCard
-              value={0}
-              label="Hours"
-              accent="#C47A3A"
-              bg={YELLOW}
-            />
-            <LockedDaysCard
-              value={0}
-              label="Minutes"
-              accent="#3A9A35"
-              bg={GREEN}
-            />
-            <LockedDaysCard
-              value={0}
-              label="Seconds"
-              accent="#C2447A"
-              bg={PINK}
-            />
-            </div>
+            ))}
           </div>
         </motion.div>
 
@@ -769,3 +643,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
