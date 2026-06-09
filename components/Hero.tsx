@@ -493,6 +493,7 @@ export default function HeroSection() {
             delay={1.1}
           />
         </div>
+        
 
         {/* ── Countdown ── */}
         <motion.div
