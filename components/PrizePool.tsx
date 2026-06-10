@@ -147,7 +147,7 @@ function ScratchCard({ onRevealed }: { onRevealed: () => void }) {
       if (data[i] < 128) transparent++;
     }
     const ratio = transparent / (canvas.width * canvas.height);
-    if (ratio > 0.30) {
+    if (ratio > 0.18) {
       revealed.current = true;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       setDone(true);

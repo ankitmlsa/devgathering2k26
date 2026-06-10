@@ -493,7 +493,6 @@ export default function HeroSection() {
             delay={1.1}
           />
         </div>
-        
 
         {/* ── Countdown ── */}
         <motion.div
@@ -516,6 +515,43 @@ export default function HeroSection() {
               </div>
             ))}
           </div>
+        </motion.div>
+
+        {/* ── Registration deadline badge ── */}
+        <motion.div
+          className="flex items-center gap-2 px-4 py-2 rounded-full"
+          style={{
+            background: "rgba(255,255,255,0.85)",
+            border: "1.5px solid rgba(216,92,138,0.28)",
+            boxShadow: "0 2px 14px rgba(216,92,138,0.12)",
+            backdropFilter: "blur(6px)",
+          }}
+          initial={{ opacity: 0, y: 10, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {/* Pulsing dot */}
+          <span className="relative flex h-2 w-2">
+            <motion.span
+              className="absolute inline-flex h-full w-full rounded-full"
+              style={{ background: "#D85C8A", opacity: 0.5 }}
+              animate={{ scale: [1, 1.9], opacity: [0.5, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+            />
+            <span
+              className="relative inline-flex rounded-full h-2 w-2"
+              style={{ background: "#D85C8A" }}
+            />
+          </span>
+          <span
+            className="text-[11px] font-semibold"
+            style={{ fontFamily: "'DM Sans', sans-serif", color: "#444" }}
+          >
+            Registration deadline :&nbsp;
+            <span style={{ color: "#D85C8A", fontWeight: 700 }}>
+              20 June 2026
+            </span>
+          </span>
         </motion.div>
 
         {/* ── CTAs ── */}
@@ -644,4 +680,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
