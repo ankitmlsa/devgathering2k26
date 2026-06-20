@@ -11,7 +11,7 @@ const GREEN = "#D7F5D0";
 const PINK = "#FFD6E8";
 
 /* ── Countdown target: 10 April 2026 09:00 IST ── */
-const TARGET = new Date("2026-06-20T09:00:00+05:30");
+const TARGET = new Date("2026-06-20T23:59:00+05:30");
 
 function getTimeLeft() {
   const diff = Math.max(0, TARGET.getTime() - Date.now());
