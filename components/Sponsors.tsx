@@ -246,7 +246,7 @@ const SPONSORS_REVEALED = [
     bg: YELLOW,
     logo: (
       <img
-        src="./osen.png"
+        src="./OSEN.png"
         alt="Incogni"
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
       />
