@@ -998,8 +998,9 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
               </motion.div>
 
               {/* Bottom notice */}
+              {/* Bottom notice */}
               <motion.div
-                className="mt-2 p-3 rounded-xl flex items-start gap-2.5"
+                className="mt-2 p-3 rounded-xl flex flex-col gap-2.5"
                 style={{
                   background: `${asiAccent}09`,
                   border: `1px solid ${asiAccent}20`,
@@ -1008,25 +1009,89 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.65 }}
               >
-                <Trophy
-                  size={13}
-                  color={asiAccent}
-                  strokeWidth={2}
-                  style={{ flexShrink: 0, marginTop: 1 }}
-                />
-                <p
-                  className="text-[10px] leading-relaxed"
-                  style={{ fontFamily: "'DM Sans', sans-serif", color: "#666" }}
-                >
-                  A{" "}
-                  <span style={{ fontWeight: 700, color: "#18181b" }}>
-                    dedicated winner
-                  </span>{" "}
-                  will be announced separately for this track — independent of
-                  the main hackathon winners. Teams can participate in ASI One
-                  alongside any other track.
-                </p>
+                <div className="flex items-start gap-2">
+                  <Trophy
+                    size={13}
+                    color={asiAccent}
+                    strokeWidth={2}
+                    style={{ flexShrink: 0, marginTop: 2 }}
+                  />
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-wider"
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      color: asiAccent,
+                    }}
+                  >
+                    Winner Benefits
+                  </p>
+                </div>
+                <ul className="flex flex-col gap-1.5 pl-[21px]">
+                  {[
+                    "Fast-track consideration for the ASI1 Ambassador program",
+                    "Official shout-out from IL LinkedIn and social media handles",
+                    "Opportunity to showcase the winning project to the community",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-1.5 text-[10px] leading-relaxed"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        color: "#555",
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: 4,
+                          height: 4,
+                          borderRadius: "50%",
+                          background: asiAccent,
+                          flexShrink: 0,
+                          marginTop: 4,
+                        }}
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
+
+              {/* Explore More button */}
+              <motion.a
+                href="https://www.fetch.ai/events/hackathons/dev-gathering-2k26/hackpack"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-flex items-center gap-2 self-start px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  background: `linear-gradient(135deg, ${asiAccent}18, ${asiAccent}28)`,
+                  border: `1.5px solid ${asiAccent}40`,
+                  color: asiAccent,
+                  textDecoration: "none",
+                }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.72 }}
+                whileHover={{
+                  background: `linear-gradient(135deg, ${asiAccent}28, ${asiAccent}40)`,
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                Explore More
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </motion.a>
             </div>
           </motion.div>
         )}
