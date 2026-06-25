@@ -127,8 +127,22 @@ function Bulb({ on }: { on: boolean }) {
       />
       {on && (
         <>
-          <ellipse cx="45" cy="62" rx="38" ry="38" fill="#fbbf24" opacity="0.12" />
-          <ellipse cx="45" cy="62" rx="28" ry="28" fill="#fbbf24" opacity="0.18" />
+          <ellipse
+            cx="45"
+            cy="62"
+            rx="38"
+            ry="38"
+            fill="#fbbf24"
+            opacity="0.12"
+          />
+          <ellipse
+            cx="45"
+            cy="62"
+            rx="28"
+            ry="28"
+            fill="#fbbf24"
+            opacity="0.18"
+          />
         </>
       )}
       <path
@@ -144,9 +158,30 @@ function Bulb({ on }: { on: boolean }) {
         strokeWidth={on ? "2" : "1.5"}
         strokeLinecap="round"
       />
-      <rect x="32" y="88" width="26" height="5" rx="2" fill={on ? "#fbbf24" : "#d1d5db"} />
-      <rect x="34" y="93" width="22" height="5" rx="2" fill={on ? "#f59e0b" : "#9ca3af"} />
-      <rect x="36" y="98" width="18" height="5" rx="2" fill={on ? "#f59e0b" : "#6b7280"} />
+      <rect
+        x="32"
+        y="88"
+        width="26"
+        height="5"
+        rx="2"
+        fill={on ? "#fbbf24" : "#d1d5db"}
+      />
+      <rect
+        x="34"
+        y="93"
+        width="22"
+        height="5"
+        rx="2"
+        fill={on ? "#f59e0b" : "#9ca3af"}
+      />
+      <rect
+        x="36"
+        y="98"
+        width="18"
+        height="5"
+        rx="2"
+        fill={on ? "#f59e0b" : "#6b7280"}
+      />
       {on && (
         <ellipse
           cx="36"
@@ -211,7 +246,11 @@ function TrackCard({
         zIndex: 10,
       }}
       initial={{ scale: 0.5, opacity: 0 }}
-      animate={revealed ? { scale: 1, opacity: 1, y: 0 } : { scale: 0.88, opacity: 0.55, y: 0 }}
+      animate={
+        revealed
+          ? { scale: 1, opacity: 1, y: 0 }
+          : { scale: 0.88, opacity: 0.55, y: 0 }
+      }
       transition={{
         duration: 0.55,
         delay: revealed ? delay : delay * 0.3,
@@ -224,7 +263,8 @@ function TrackCard({
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(140deg, rgba(255,255,255,0.55) 0%, transparent 52%)",
+              background:
+                "linear-gradient(140deg, rgba(255,255,255,0.55) 0%, transparent 52%)",
               borderRadius: "inherit",
             }}
           />
@@ -249,7 +289,9 @@ function TrackCard({
           borderRadius: "16px 16px 0 0",
           transition: "background 0.4s",
         }}
-        animate={revealed ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+        animate={
+          revealed ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }
+        }
         transition={{ duration: 0.5, delay: revealed ? delay + 0.15 : 0 }}
       />
 
@@ -285,7 +327,11 @@ function TrackCard({
           >
             <motion.div
               animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="flex items-center justify-center rounded-full"
               style={{
                 width: 38,
@@ -340,7 +386,11 @@ function TrackCard({
               }}
               initial={{ scale: 0.5, rotate: -15 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.4, delay: delay + 0.25, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.4,
+                delay: delay + 0.25,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
               <Icon size={22} color={track.accent} strokeWidth={1.8} />
             </motion.div>
@@ -425,7 +475,8 @@ function ConnectorLines({
           tExit = Math.min(tExit, Math.max(t1, t2));
         }
 
-        const tEdge = tEnter > 0 && tEnter <= tExit ? tEnter : Math.max(0, tExit);
+        const tEdge =
+          tEnter > 0 && tEnter <= tExit ? tEnter : Math.max(0, tExit);
         const EXTRA = 110;
         const ex = C + (tEdge + EXTRA) * nx;
         const ey = C + (tEdge + EXTRA) * ny;
@@ -444,8 +495,16 @@ function ConnectorLines({
             strokeDasharray="6 5"
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={on ? { pathLength: 1, opacity: 0.65 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.5, delay: on ? i * 0.07 : 0, ease: "easeOut" }}
+            animate={
+              on
+                ? { pathLength: 1, opacity: 0.65 }
+                : { pathLength: 0, opacity: 0 }
+            }
+            transition={{
+              duration: 0.5,
+              delay: on ? i * 0.07 : 0,
+              ease: "easeOut",
+            }}
           />
         );
       })}
@@ -476,7 +535,11 @@ function MobileGrid({ revealedCount }: { revealedCount: number }) {
               transition: "background 0.4s, outline 0.4s, box-shadow 0.4s",
             }}
             initial={{ scale: 0.85, opacity: 0 }}
-            animate={revealed ? { scale: 1, opacity: 1 } : { scale: 0.88, opacity: 0.55 }}
+            animate={
+              revealed
+                ? { scale: 1, opacity: 1 }
+                : { scale: 0.88, opacity: 0.55 }
+            }
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
             {revealed && (
@@ -546,7 +609,10 @@ function MobileGrid({ revealedCount }: { revealedCount: number }) {
                   </div>
                   <p
                     className="text-[9px] uppercase tracking-[0.35em] font-semibold"
-                    style={{ fontFamily: "'DM Sans', sans-serif", color: "#bbb" }}
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      color: "#bbb",
+                    }}
                   >
                     Track {track.number}
                   </p>
@@ -578,13 +644,19 @@ function MobileGrid({ revealedCount }: { revealedCount: number }) {
                   </div>
                   <p
                     className="font-black leading-tight tracking-tight text-sm"
-                    style={{ fontFamily: "'Syne', sans-serif", color: "#1a1a1a" }}
+                    style={{
+                      fontFamily: "'Syne', sans-serif",
+                      color: "#1a1a1a",
+                    }}
                   >
                     {track.name}
                   </p>
                   <p
                     className="text-[10px] leading-snug flex-1"
-                    style={{ fontFamily: "'DM Sans', sans-serif", color: "#666" }}
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      color: "#666",
+                    }}
                   >
                     {track.desc}
                   </p>
@@ -615,7 +687,8 @@ function MobileGrid({ revealedCount }: { revealedCount: number }) {
 function ASIOneCard({ revealed }: { revealed: boolean }) {
   // Blend of all palette colors for ASI One
   const asiAccent = "#7C6FE0"; // rich purple-indigo — distinct, premium
-  const asiBg = "linear-gradient(135deg, #EDE9FF 0%, #CFE8FF 40%, #FFE9A8 75%, #D7F5D0 100%)";
+  const asiBg =
+    "linear-gradient(135deg, #EDE9FF 0%, #CFE8FF 40%, #FFE9A8 75%, #D7F5D0 100%)";
 
   return (
     <motion.div
@@ -700,7 +773,11 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
           >
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="flex items-center justify-center rounded-full"
               style={{
                 width: 56,
@@ -758,7 +835,11 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                 className="flex items-center justify-center"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.25,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
                 <svg
                   aria-hidden="true"
@@ -768,7 +849,10 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                   viewBox="0 0 2219 512"
                   style={{ width: 140, height: "auto", color: asiAccent }}
                 >
-                  <path fill="currentColor" d="M724.5 126.7L633.2 380.2h34l26.9-75.7H813.3l27.8 75.7h35.1L782.2 126.7H724.5zM705 274l41.5-116.7h12.6L802.1 274H705zm363.3-25.9c-12.6-5.9-27.6-9.5-45-10.9l-28.1-2.4c-14.1-1.2-24.8-5.3-31.9-12.5s-10.8-15.4-10.8-24.7c0-8.1 2-15.7 6.1-22.7s10.2-12.8 18.4-17.2s18.6-6.6 31.1-6.6c13 0 23.5 2.3 31.6 6.9c8.1 4.6 14.1 10.5 17.9 17.7s5.7 14.8 5.7 22.9h34c0-16.2-3.8-30.2-11.3-41.8c-7.5-11.7-18-20.8-31.4-27.3s-28.9-9.7-46.5-9.7c-17.8 0-33.5 3.3-46.9 9.9s-23.9 15.7-31.4 27.3s-11.3 25.1-11.3 40.6c0 19.7 6.7 35.5 20.1 47.6s31.4 19 53.8 20.8l28.1 2.4c17.4 1.6 30.6 5.9 39.6 12.7s13.5 15.5 13.5 25.9c0 8.6-2.3 16.5-6.9 23.8s-11.8 13.2-21.5 17.7s-22.2 6.8-37.5 6.8c-16.4 0-29.5-2.5-39.1-7.6s-16.4-11.5-20.5-19.1c-4.1-7.6-6.1-15.3-6.1-22.9h-34c0 15.5 3.9 29.4 11.8 41.7c7.9 12.3 19.2 21.9 34 28.8s32.8 10.4 53.8 10.4c19.9 0 37.4-3.4 52.4-10.1s26.7-16.1 35.1-28.1s12.5-25.8 12.5-41.3c0-13.7-3.4-25.4-10.2-35.2s-16.6-17.7-29.2-23.6zm131.1-121.4h-34V380.2h34V126.7zm124.7 40h-40.3v42.4h40.3V166.7zm0 128.5h-40.3v42.4h40.3V295.2zm196.4 91.2c-21.9 0-41.4-3.8-57.8-11.2c-16.5-7.5-30.6-17.5-41.9-29.7c-11.3-12.3-20-26.2-25.7-41.4c-5.8-15.2-8.7-31-8.7-46.8v-8.9c0-15.8 3-31.7 8.9-47.1c5.9-15.3 14.7-29.3 26.2-41.6c11.4-12.2 25.6-22.1 42.1-29.5c16.5-7.3 35.6-11 56.8-11s40.4 3.7 56.8 11c16.5 7.3 30.6 17.2 42.1 29.5c11.5 12.3 20.3 26.3 26.2 41.6c5.9 15.4 8.9 31.2 8.9 47.1v8.9c0 15.9-2.9 31.6-8.7 46.8c-5.7 15.2-14.4 29.1-25.7 41.4c-11.3 12.2-25.4 22.2-41.9 29.7c-16.4 7.4-35.9 11.2-57.8 11.2zm0-239c-20.4 0-38.4 4.7-53.6 13.9c-15.3 9.2-27.1 22-35.3 37.9c-8.1 15.8-12.1 33.8-12.1 53.7c0 19.5 4 37.3 11.9 53.1c8 15.9 19.7 28.8 34.7 38.2s33.4 14.2 54.4 14.2c21 0 39.3-4.8 54.4-14.2s26.8-22.3 34.7-38.2c7.9-15.8 11.9-33.6 11.9-53.1c0-19.8-4.1-37.9-12.1-53.7c-8.2-15.9-19.9-28.7-35-37.9c-15.1-9.2-33.2-13.9-53.9-13.9zm371.7 232.5V224.5c0-22.5-6.6-40.9-19.5-54.7c-13-14-31-21.1-53.3-21.1c-22.9 0-41.8 7.3-56.1 21.6s-21.6 33.6-21.6 57.2V379.9h-33.5V127.2h33.9v55.5s5.9-16.6 19.7-32c14.6-16.3 38-31.5 70.2-31.5h2c31.6 0 54.9 13.4 69.8 32.7c15.1 19.6 22 44.7 22 82.6V379.9h-33.5zm210.6 6.6c-56.8 0-124.8-37.7-124.8-138c0-53.7 34-129.2 121.8-129.2c81.1 0 118.9 60.5 118.9 121.3v15H2011l.4 6.4c.9 16 3.9 30.6 9.1 43.4c6.5 15.9 16.7 28.7 30.4 38c13.7 9.3 31.2 14 52 14c21.8 0 39.9-5 53.7-14.8c12.3-8.7 20.4-18.9 24.3-30.3l.1-.4h31.8l-.2 .8c-3.8 13.6-9.9 25.6-18.4 35.8c-10.1 12.2-23 21.7-38.3 28.2c-15.5 6.5-33.4 9.8-53 9.8zm-2.9-238.2c-58.7 0-83.1 44.6-87.9 84.2h174.2c-1.7-40.6-27.5-84.2-86.3-84.2zM.2 168.8H168.9V337.5H.2V168.8zM422.1 337.5a84.4 84.4 0 1 0 0-168.8 84.4 84.4 0 1 0 0 168.8zm-84.4 0H168.9V506.3H337.7V337.5zM337.7 0H168.9V168.8H337.7V0z" />
+                  <path
+                    fill="currentColor"
+                    d="M724.5 126.7L633.2 380.2h34l26.9-75.7H813.3l27.8 75.7h35.1L782.2 126.7H724.5zM705 274l41.5-116.7h12.6L802.1 274H705zm363.3-25.9c-12.6-5.9-27.6-9.5-45-10.9l-28.1-2.4c-14.1-1.2-24.8-5.3-31.9-12.5s-10.8-15.4-10.8-24.7c0-8.1 2-15.7 6.1-22.7s10.2-12.8 18.4-17.2s18.6-6.6 31.1-6.6c13 0 23.5 2.3 31.6 6.9c8.1 4.6 14.1 10.5 17.9 17.7s5.7 14.8 5.7 22.9h34c0-16.2-3.8-30.2-11.3-41.8c-7.5-11.7-18-20.8-31.4-27.3s-28.9-9.7-46.5-9.7c-17.8 0-33.5 3.3-46.9 9.9s-23.9 15.7-31.4 27.3s-11.3 25.1-11.3 40.6c0 19.7 6.7 35.5 20.1 47.6s31.4 19 53.8 20.8l28.1 2.4c17.4 1.6 30.6 5.9 39.6 12.7s13.5 15.5 13.5 25.9c0 8.6-2.3 16.5-6.9 23.8s-11.8 13.2-21.5 17.7s-22.2 6.8-37.5 6.8c-16.4 0-29.5-2.5-39.1-7.6s-16.4-11.5-20.5-19.1c-4.1-7.6-6.1-15.3-6.1-22.9h-34c0 15.5 3.9 29.4 11.8 41.7c7.9 12.3 19.2 21.9 34 28.8s32.8 10.4 53.8 10.4c19.9 0 37.4-3.4 52.4-10.1s26.7-16.1 35.1-28.1s12.5-25.8 12.5-41.3c0-13.7-3.4-25.4-10.2-35.2s-16.6-17.7-29.2-23.6zm131.1-121.4h-34V380.2h34V126.7zm124.7 40h-40.3v42.4h40.3V166.7zm0 128.5h-40.3v42.4h40.3V295.2zm196.4 91.2c-21.9 0-41.4-3.8-57.8-11.2c-16.5-7.5-30.6-17.5-41.9-29.7c-11.3-12.3-20-26.2-25.7-41.4c-5.8-15.2-8.7-31-8.7-46.8v-8.9c0-15.8 3-31.7 8.9-47.1c5.9-15.3 14.7-29.3 26.2-41.6c11.4-12.2 25.6-22.1 42.1-29.5c16.5-7.3 35.6-11 56.8-11s40.4 3.7 56.8 11c16.5 7.3 30.6 17.2 42.1 29.5c11.5 12.3 20.3 26.3 26.2 41.6c5.9 15.4 8.9 31.2 8.9 47.1v8.9c0 15.9-2.9 31.6-8.7 46.8c-5.7 15.2-14.4 29.1-25.7 41.4c-11.3 12.2-25.4 22.2-41.9 29.7c-16.4 7.4-35.9 11.2-57.8 11.2zm0-239c-20.4 0-38.4 4.7-53.6 13.9c-15.3 9.2-27.1 22-35.3 37.9c-8.1 15.8-12.1 33.8-12.1 53.7c0 19.5 4 37.3 11.9 53.1c8 15.9 19.7 28.8 34.7 38.2s33.4 14.2 54.4 14.2c21 0 39.3-4.8 54.4-14.2s26.8-22.3 34.7-38.2c7.9-15.8 11.9-33.6 11.9-53.1c0-19.8-4.1-37.9-12.1-53.7c-8.2-15.9-19.9-28.7-35-37.9c-15.1-9.2-33.2-13.9-53.9-13.9zm371.7 232.5V224.5c0-22.5-6.6-40.9-19.5-54.7c-13-14-31-21.1-53.3-21.1c-22.9 0-41.8 7.3-56.1 21.6s-21.6 33.6-21.6 57.2V379.9h-33.5V127.2h33.9v55.5s5.9-16.6 19.7-32c14.6-16.3 38-31.5 70.2-31.5h2c31.6 0 54.9 13.4 69.8 32.7c15.1 19.6 22 44.7 22 82.6V379.9h-33.5zm210.6 6.6c-56.8 0-124.8-37.7-124.8-138c0-53.7 34-129.2 121.8-129.2c81.1 0 118.9 60.5 118.9 121.3v15H2011l.4 6.4c.9 16 3.9 30.6 9.1 43.4c6.5 15.9 16.7 28.7 30.4 38c13.7 9.3 31.2 14 52 14c21.8 0 39.9-5 53.7-14.8c12.3-8.7 20.4-18.9 24.3-30.3l.1-.4h31.8l-.2 .8c-3.8 13.6-9.9 25.6-18.4 35.8c-10.1 12.2-23 21.7-38.3 28.2c-15.5 6.5-33.4 9.8-53 9.8zm-2.9-238.2c-58.7 0-83.1 44.6-87.9 84.2h174.2c-1.7-40.6-27.5-84.2-86.3-84.2zM.2 168.8H168.9V337.5H.2V168.8zM422.1 337.5a84.4 84.4 0 1 0 0-168.8 84.4 84.4 0 1 0 0 168.8zm-84.4 0H168.9V506.3H337.7V337.5zM337.7 0H168.9V168.8H337.7V0z"
+                  />
                 </svg>
               </motion.div>
 
@@ -811,7 +895,10 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
               {/* Label */}
               <motion.p
                 className="text-[9px] uppercase tracking-[0.6em] font-semibold"
-                style={{ fontFamily: "'DM Sans', sans-serif", color: asiAccent + "99" }}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  color: asiAccent + "99",
+                }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -860,11 +947,15 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                Push the frontier of Artificial Superintelligence. Build systems that reason
-                beyond human-level, exhibit emergent capabilities, or pioneer new paradigms in
-                general intelligence. This track challenges you to think beyond narrow AI —
-                imagine what comes{" "}
-                <span style={{ color: asiAccent, fontWeight: 700 }}>after</span>.
+                Most AI applications stop at conversation. Your challenge is to
+                build an AI agent that can be discovered through ASI:One,
+                understand a user’s intent, and take meaningful action to solve
+                a real-world problem. Your agent might coordinate services,
+                automate a workflow, analyze live information, make
+                recommendations, complete transactions, or collaborate with
+                other specialized agents. The problem and approach are up to
+                you, but the result should be more than a chatbot or a thin
+                wrapper around an API.
               </motion.p>
 
               {/* Info pills row */}
@@ -875,9 +966,21 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                 transition={{ delay: 0.58 }}
               >
                 {[
-                  { label: "Exclusive Winner Prize", color: BLUE, text: "#5BA4E6" },
-                  { label: "Independent Judging Panel", color: GREEN, text: "#4CAF50" },
-                  { label: "Open to all participants", color: YELLOW, text: "#C89A2A" },
+                  {
+                    label: "Exclusive Winner Prize",
+                    color: BLUE,
+                    text: "#5BA4E6",
+                  },
+                  {
+                    label: "Independent Judging Panel",
+                    color: GREEN,
+                    text: "#4CAF50",
+                  },
+                  {
+                    label: "Open to all participants",
+                    color: YELLOW,
+                    text: "#C89A2A",
+                  },
                 ].map((pill) => (
                   <span
                     key={pill.label}
@@ -905,7 +1008,12 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.65 }}
               >
-                <Trophy size={13} color={asiAccent} strokeWidth={2} style={{ flexShrink: 0, marginTop: 1 }} />
+                <Trophy
+                  size={13}
+                  color={asiAccent}
+                  strokeWidth={2}
+                  style={{ flexShrink: 0, marginTop: 1 }}
+                />
                 <p
                   className="text-[10px] leading-relaxed"
                   style={{ fontFamily: "'DM Sans', sans-serif", color: "#666" }}
@@ -914,8 +1022,9 @@ function ASIOneCard({ revealed }: { revealed: boolean }) {
                   <span style={{ fontWeight: 700, color: "#18181b" }}>
                     dedicated winner
                   </span>{" "}
-                  will be announced separately for this track — independent of the main hackathon
-                  winners. Teams can participate in ASI One alongside any other track.
+                  will be announced separately for this track — independent of
+                  the main hackathon winners. Teams can participate in ASI One
+                  alongside any other track.
                 </p>
               </motion.div>
             </div>
@@ -1016,7 +1125,11 @@ export default function ThemesSection() {
       {/* 4-band pastel wash */}
       <div className="absolute inset-0 flex pointer-events-none">
         {[BLUE, YELLOW, GREEN, PINK].map((c, i) => (
-          <div key={i} className="flex-1 opacity-[0.08]" style={{ background: c }} />
+          <div
+            key={i}
+            className="flex-1 opacity-[0.08]"
+            style={{ background: c }}
+          />
         ))}
       </div>
 
@@ -1066,11 +1179,16 @@ export default function ThemesSection() {
             className="mx-auto mt-4 rounded-full"
             style={{
               height: 3,
-              background: "linear-gradient(90deg, #CFE8FF, #FFE9A8, #D7F5D0, #FFD6E8)",
+              background:
+                "linear-gradient(90deg, #CFE8FF, #FFE9A8, #D7F5D0, #FFD6E8)",
             }}
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: 140, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.7,
+              delay: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           />
 
           <motion.p
@@ -1126,7 +1244,11 @@ export default function ThemesSection() {
           >
             <motion.div
               className="rounded-full bg-white"
-              style={{ width: 32, height: 32, boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}
+              style={{
+                width: 32,
+                height: 32,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+              }}
               animate={{ x: on ? 40 : 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             />
@@ -1194,7 +1316,11 @@ export default function ThemesSection() {
               }}
             />
 
-            <ConnectorLines on={on} radius={RADIUS_DESKTOP * 0.5} orbitSize={ORBIT_SIZE} />
+            <ConnectorLines
+              on={on}
+              radius={RADIUS_DESKTOP * 0.5}
+              orbitSize={ORBIT_SIZE}
+            />
 
             {TRACKS.map((track, i) => (
               <TrackCard
@@ -1231,7 +1357,11 @@ export default function ThemesSection() {
                         border: "1.5px solid rgba(251,191,36,0.4)",
                       }}
                       animate={{ scale: [1, 1.6], opacity: [0.5, 0] }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeOut",
+                      }}
                     />
                     <motion.div
                       className="absolute rounded-full pointer-events-none"
@@ -1245,7 +1375,12 @@ export default function ThemesSection() {
                         border: "1.5px solid rgba(251,191,36,0.25)",
                       }}
                       animate={{ scale: [1, 2], opacity: [0.35, 0] }}
-                      transition={{ duration: 1.8, delay: 0.5, repeat: Infinity, ease: "easeOut" }}
+                      transition={{
+                        duration: 1.8,
+                        delay: 0.5,
+                        repeat: Infinity,
+                        ease: "easeOut",
+                      }}
                     />
                   </>
                 )}
@@ -1282,7 +1417,8 @@ export default function ThemesSection() {
             <div
               className="h-px flex-1 max-w-[120px]"
               style={{
-                background: "linear-gradient(90deg, transparent, rgba(0,0,0,0.1))",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(0,0,0,0.1))",
               }}
             />
             <div className="flex items-center gap-1.5">
@@ -1318,7 +1454,8 @@ export default function ThemesSection() {
             <div
               className="h-px flex-1 max-w-[120px]"
               style={{
-                background: "linear-gradient(90deg, rgba(0,0,0,0.1), transparent)",
+                background:
+                  "linear-gradient(90deg, rgba(0,0,0,0.1), transparent)",
               }}
             />
           </motion.div>
