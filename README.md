@@ -36,11 +36,12 @@ in depth. The portal is intentionally **not linked from the public nav** — rea
 
 ### Meal collection rules (at scan time)
 
-In strict order — valid QR → team not eliminated → not already collected **this
-round** → eligible. The round is an admin-controlled global value (`1` / `2` / `Final`).
-"One meal per participant per round" is enforced by a `UNIQUE(participant_code,
-round_number)` on `public.scanner_meal_collection`, so simultaneous double-scans can't
-double-serve.
+In strict order — valid QR → team not eliminated → this **meal** not already collected
+**this round** → eligible. The round is an admin-controlled global value (`1` / `2` /
+`Final`). "One of each meal per participant per round" is enforced by a
+`UNIQUE(participant_code, meal_slot, round_number)` on `public.scanner_meal_collection`,
+so simultaneous double-scans of the same meal can't double-serve while the participant's
+other meals remain independently collectible.
 
 ### Data ownership
 

@@ -46,7 +46,7 @@ const STATUS_META: Record<VerifyStatus, Meta> = {
   },
   already_collected_round: {
     title: "Already collected",
-    note: "Meal has already been collected for this round.",
+    note: "This meal has already been collected for this round.",
     band: "linear-gradient(135deg, #E8916E, #d97539)",
     icon: WARN,
   },
