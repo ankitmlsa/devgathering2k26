@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 /* ── Palette ── */
 
+
 const BLUE = "#CFE8FF";
 const YELLOW = "#FFE9A8";
 const GREEN = "#D7F5D0";
