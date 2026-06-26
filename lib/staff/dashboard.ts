@@ -67,11 +67,20 @@ export async function buildDashboard(): Promise<DashboardData> {
     ),
   ]);
 
-  // Group orders per user -> per slot.
+  // Group orders per user -> per slot. A participant can have MULTIPLE order rows
+  // for the same meal slot (e.g. they re-generated their QR), each with its own
+  // verification_code. Only the row whose QR was actually scanned gets flipped to
+  // `collected`; the others stay `pending`. The ledger is the authority on whether
+  // the meal was served, so a `collected` row must win — otherwise a stray pending
+  // duplicate would mask it and the dashboard would show the meal as uncollected
+  // even though the scanner already refused to serve it again.
   const ordersByUser = new Map<string, Map<string, OrderRow>>();
   for (const o of orderRows) {
     const m = ordersByUser.get(o.user_address) ?? new Map<string, OrderRow>();
-    m.set(o.meal_slot, o);
+    const existing = m.get(o.meal_slot);
+    if (!existing || (existing.status !== "collected" && o.status === "collected")) {
+      m.set(o.meal_slot, o);
+    }
     ordersByUser.set(o.user_address, m);
   }
 

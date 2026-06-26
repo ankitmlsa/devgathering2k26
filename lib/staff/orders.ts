@@ -107,27 +107,51 @@ export async function collectMeal(rawCode: string, collectedBy: string): Promise
     return { status: "eliminated", order, round: null };
   }
 
-  // 3 + 4. Atomic per-round claim.
+  // 3 + 4. Atomic per-meal, per-round claim. The UNIQUE is on
+  // (participant_code, meal_slot, round_number), so a participant can collect
+  // each distinct meal once per round; a re-scan of the SAME meal conflicts.
+  // meal_slot must be non-null for the dedupe to work (NULLs are distinct in a
+  // unique index), so fall back to the verification code if it is ever missing.
   const round = await getCurrentRound();
+  const mealSlot = (order.meal_slot || "").trim() || order.verification_code;
   const claimed = await query<{ id: string }>(
     `INSERT INTO public.scanner_meal_collection
        (participant_code, team_id, round_number, verification_code, meal_slot, meal_label, collected_by)
      VALUES ($1, $2, $3, $4, $5, $6, $7)
-     ON CONFLICT (participant_code, round_number) DO NOTHING
+     ON CONFLICT (participant_code, meal_slot, round_number) DO NOTHING
      RETURNING id`,
     [
       order.participant_code,
       effectiveTeamId,
       round,
       order.verification_code,
-      order.meal_slot,
+      mealSlot,
       order.meal_label,
       collectedBy,
     ],
   );
 
   if (claimed.length === 0) {
-    // Already collected for this round — do NOT flip meal_orders.status.
+    // Already collected this round — possibly via a *different* QR the participant
+    // re-generated for the same meal. The ledger is the authority and we must not
+    // serve again, but reconcile this duplicate QR's informational meal_orders row
+    // to 'collected' (copying the original collection's metadata) so it does not
+    // linger as 'pending'. A stale pending duplicate makes the dashboard — which
+    // reads meal_orders.status — show the meal as uncollected even though the
+    // scanner just refused it. No-op when this exact QR is what was scanned.
+    await query(
+      `UPDATE public.meal_orders AS dup
+          SET status = 'collected',
+              collected_at = src.collected_at,
+              collected_by = src.collected_by
+         FROM public.meal_orders AS src
+        WHERE dup.verification_code = $1
+          AND dup.status = 'pending'
+          AND src.user_address = dup.user_address
+          AND src.meal_slot = dup.meal_slot
+          AND src.status = 'collected'`,
+      [order.verification_code],
+    );
     return { status: "already_collected_round", order, round };
   }
 

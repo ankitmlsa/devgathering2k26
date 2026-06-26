@@ -44,16 +44,30 @@ create table if not exists public.scanner_meal_collection (
     team_id           text not null,
     round_number      text not null,
     verification_code text not null,
-    meal_slot         text,
+    meal_slot         text not null default '',
     meal_label        text,
     collected_at      timestamptz not null default now(),
-    collected_by      text not null,
-    unique (participant_code, round_number)
+    collected_by      text not null
 );
 create index if not exists idx_scanner_meal_collection_round
     on public.scanner_meal_collection (round_number);
 create index if not exists idx_scanner_meal_collection_team
     on public.scanner_meal_collection (team_id);
+
+-- Collection is per MEAL, not per participant. The original
+-- UNIQUE(participant_code, round_number) collapsed all six meal slots into a
+-- single claim per round: once a participant collected one meal, every other
+-- meal QR for them returned "already collected this round" even though the
+-- per-slot dashboard (driven by meal_orders.status) still showed those meals
+-- uncollected. The correct grain is (participant, meal_slot, round) — one of
+-- each meal per participant per round. Drop the old key and add the finer one.
+-- Both statements are idempotent so this runs safely on every cold start, and
+-- the old data (≤1 row per participant+round) trivially satisfies the finer key.
+alter table public.scanner_meal_collection
+    drop constraint if exists scanner_meal_collection_participant_code_round_number_key;
+drop index if exists public.scanner_meal_collection_participant_code_round_number_key;
+create unique index if not exists scanner_meal_collection_pmr_uniq
+    on public.scanner_meal_collection (participant_code, meal_slot, round_number);
 `;
 
 let ensured: Promise<void> | null = null;
