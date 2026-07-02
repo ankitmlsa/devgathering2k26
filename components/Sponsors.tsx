@@ -267,7 +267,7 @@ const SPONSORS_REVEALED = [
   },
   {
     name: "Code Crafters",
-    link: "#",
+    link: "https://codecrafters.io/",
     accent: "#5BA4E6",
     bg: PINK,
     logo: (
